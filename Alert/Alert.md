@@ -23,3 +23,11 @@ PORT   STATE SERVICE REASON         VERSION
 |_http-server-header: Apache/2.4.41 (Ubuntu)
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
+
+From the scan we can find, port 22 - ssh and port 80 - http is open.
+As it has port 80 open, to access the website hoseted by the target we have to map the domain name to the ip. To do this we add the ip and the domain name which is `alert.htb` to `/etc/hosts` file.
+Add `10.10.11.44	alert.htb` to the file.
+
+Now lets open the website.
+![alt text](image-1.png)
+Here we can explore each tab and also view their code to get some idea, but before that lets also try to find new subdomains and directories.
