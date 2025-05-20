@@ -32,10 +32,19 @@ Now lets open the website.
 ![alt text](image-1.png)
 Here we can explore each tab and also view their code to get some idea, but before that lets also try to find new subdomains and directories.
 
-To find subdomains we use ffuf `ffuf -u http://10.10.11.44 -H "Host: FUZZ.alert.htb" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -mc all -ac`.
+To find subdomains we use `ffuf -u http://10.10.11.44 -H "Host: FUZZ.alert.htb" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -mc all -ac`.
 - The flag -ac is used to filter only the found domains.
 
 Once we run this we find a subdoamin `statistics.alert.htb`.
 Now to access this domain we have to map it to the address just like we did for `alert.htb` in `/etc/hosts` file.
 When we visit the site we get a login page.
 ![alt text](image-2.png)
+
+Now lets try to explore the directories.
+we use `feroxbuster -u http://alert.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt`.
+
+We didnt find any useful directory to work with thus, lets begin with exploring the website.
+Now in the website, it allows us to upload a .md file and when we upload a file we are directed to a `http://alert.htb/visualizer.php`, Now when we click the share markdown we can see that a new page is generated. Based on this we can assume that the md file is given a random name which can be used to share the file.
+
+To check if the .md file is being read or executed, lets add `<img src = x onerror=alert(1)/>` to the md file. When we upload the file and sharemarkdown we can see alert message, meaning the contents are accessec from the .md file we upload.
+HTML is used because .md file can handle it.
