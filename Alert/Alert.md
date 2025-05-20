@@ -31,3 +31,11 @@ Add `10.10.11.44	alert.htb` to the file.
 Now lets open the website.
 ![alt text](image-1.png)
 Here we can explore each tab and also view their code to get some idea, but before that lets also try to find new subdomains and directories.
+
+To find subdomains we use ffuf `ffuf -u http://10.10.11.44 -H "Host: FUZZ.alert.htb" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -mc all -ac`.
+- The flag -ac is used to filter only the found domains.
+
+Once we run this we find a subdoamin `statistics.alert.htb`.
+Now to access this domain we have to map it to the address just like we did for `alert.htb` in `/etc/hosts` file.
+When we visit the site we get a login page.
+![alt text](image-2.png)
